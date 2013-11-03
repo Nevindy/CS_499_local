@@ -53,6 +53,7 @@ public class PlatformManager : MonoBehaviour {
 				Random.Range(minSize.y, maxSize.y),
 				Random.Range(minSize.z, maxSize.z));
 				
+				
 		Vector3 position = nextPosition;
 		position.x += scale.x * 0.5f;
 		position.y += scale.y * 0.5f;
@@ -67,9 +68,11 @@ public class PlatformManager : MonoBehaviour {
 		objectQueue.Enqueue(o);
 		
 		nextPosition += new Vector3(
-				Random.Range(minGap.x, maxGap.x) + scale.x,
+				Random.Range(minGap.x, maxGap.x),
 				Random.Range(minGap.y, maxGap.y),
 				Random.Range(minGap.z, maxGap.z));
+				
+		
 		if(nextPosition.y < minY) {
 			nextPosition.y = minY + maxGap.y;
 		}
