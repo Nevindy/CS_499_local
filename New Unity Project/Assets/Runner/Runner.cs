@@ -50,8 +50,8 @@ public class Runner : MonoBehaviour {
 		}
 		float obstX = PlatformManager.getObstacleX();
 		Debug.Log(obstX);
-		if(distanceTraveled >= obstX) {
-			PlatformManager.removeObstacle(distanceTraveled);
+		if(distanceTraveled >= obstX-1) {
+			PlatformManager.removeObstacle(obstX);
 		}
 	}
 	
