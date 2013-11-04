@@ -15,6 +15,7 @@ public class PlatformManager : MonoBehaviour {
 	
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
+	//private Queue<Transform> obstacleQueue;
 	
 	// Use this for initialization
 	void Start () {
