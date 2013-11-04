@@ -48,6 +48,11 @@ public class Runner : MonoBehaviour {
 		if(transform.localPosition.y < gameOverY) {
 			GameEventManager.TriggerGameOver();
 		}
+		float obstX = PlatformManager.getObstacleX();
+		Debug.Log(obstX);
+		if(distanceTraveled >= obstX) {
+			PlatformManager.removeObstacle(distanceTraveled);
+		}
 	}
 	
 	void FixedUpdate () {

@@ -33,7 +33,7 @@
 -define:UNITY_EDITOR_WIN
 Assets/Managers/GUIManager.cs
 Assets/Managers/GameEventManager.cs
-Assets/Obstacle/ObstacleManager.cs
+Assets/Obstacle/Obstacle.cs
 Assets/Platform/PlatformManager.cs
 Assets/Runner/Runner.cs
 Assets/Skyline/Skyline_Manager.cs

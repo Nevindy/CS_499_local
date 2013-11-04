@@ -17,9 +17,12 @@ public class PlatformManager : MonoBehaviour {
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
 	private Queue<Transform> obstacleQueue;
+	private static PlatformManager instance;
+	private float obstacleX;
 	
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
 		objectQueue = new Queue<Transform>(numberOfObjects);
@@ -27,7 +30,7 @@ public class PlatformManager : MonoBehaviour {
 		for (int i = 0; i < numberOfObjects; i++) {
 			objectQueue.Enqueue((Transform)Instantiate(prefab,
 					new Vector3(0f, 0f, -100f), Quaternion.identity));
-			obstacleQueue.Enqueue((Transform)Instantiate(prefab,
+			obstacleQueue.Enqueue((Transform)Instantiate(obstacle,
 					new Vector3(0f, 0f, -100f), Quaternion.identity));
 			enabled = false;
 		}
@@ -46,6 +49,7 @@ public class PlatformManager : MonoBehaviour {
 			Recycle();
 		}
 		enabled = true;
+		getNextObstacleLoc(0f);
 	}
 	
 	private void GameOver() {
@@ -64,7 +68,7 @@ public class PlatformManager : MonoBehaviour {
 		position.y += scale.y * 0.5f;
 		
 		Vector3 obstaclePosition = position;
-		obstaclePosition.x += Random.Range(0, scale.x);
+		obstaclePosition.x += Random.Range(0, scale.x * 0.5f);
 		obstaclePosition.y += scale.y;
 		
 		Transform o = objectQueue.Dequeue();
@@ -92,5 +96,45 @@ public class PlatformManager : MonoBehaviour {
 		else if(nextPosition.y > maxY){
 			nextPosition.y = maxY - maxGap.y;
 		}
+	}
+	
+	//This method returns the location of the next obstacle
+	//Input: location of the last obstacle location
+	//Output: none, obstacleX mutated
+	//This method should be called each time an obstacle is removed
+	private void getNextObstacleLoc(float initX) {
+		bool isFound = false;
+		float returnX = 0f;
+		foreach(Transform obj in instance.obstacleQueue){
+			if(!isFound) {
+				if(obj.position.x > initX){
+					isFound = true;
+					obstacleX = obj.position.x;
+				}
+			}
+		}
+	}
+	
+	public static float getObstacleX() {
+		return instance.obstacleX;
+	}
+	
+	public static void removeObstacle(float position) {
+		Vector3 dissapear = new Vector3(
+					instance.obstacle.position.x,
+					instance.obstacle.position.y,
+					instance.obstacle.position.z + 1000);
+					
+		bool isFound = false;
+		foreach(Transform obj in instance.obstacleQueue){
+			if(!isFound) {
+				if(obj.position.x >= position - 1){
+					isFound = true;
+					obj.position = dissapear;
+				}
+			}
+		}
+		
+		instance.getNextObstacleLoc(dissapear.x);
 	}
 }
