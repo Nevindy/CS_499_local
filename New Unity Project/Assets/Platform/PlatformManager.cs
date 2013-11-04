@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlatformManager : MonoBehaviour {
 
 	public Transform prefab;
+	public Transform obstacle;
 	public int numberOfObjects;
 	public float recycleOffset;
 	public Vector3 startPosition;
@@ -15,15 +16,18 @@ public class PlatformManager : MonoBehaviour {
 	
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
-	//private Queue<Transform> obstacleQueue;
+	private Queue<Transform> obstacleQueue;
 	
 	// Use this for initialization
 	void Start () {
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
 		objectQueue = new Queue<Transform>(numberOfObjects);
+		obstacleQueue = new Queue<Transform>(numberOfObjects);
 		for (int i = 0; i < numberOfObjects; i++) {
 			objectQueue.Enqueue((Transform)Instantiate(prefab,
+					new Vector3(0f, 0f, -100f), Quaternion.identity));
+			obstacleQueue.Enqueue((Transform)Instantiate(prefab,
 					new Vector3(0f, 0f, -100f), Quaternion.identity));
 			enabled = false;
 		}
@@ -59,6 +63,10 @@ public class PlatformManager : MonoBehaviour {
 		position.x += scale.x * 0.5f;
 		position.y += scale.y * 0.5f;
 		
+		Vector3 obstaclePosition = position;
+		obstaclePosition.x += Random.Range(0, scale.x);
+		obstaclePosition.y += scale.y;
+		
 		Transform o = objectQueue.Dequeue();
 		o.localScale = scale;
 		o.localPosition = position;
@@ -67,6 +75,10 @@ public class PlatformManager : MonoBehaviour {
 		o.renderer.material = materials[materialIndex];
 		o.collider.material = physicMaterials[materialIndex];
 		objectQueue.Enqueue(o);
+		
+		Transform obst = obstacleQueue.Dequeue();
+		obst.localPosition = obstaclePosition;
+		obstacleQueue.Enqueue(obst);
 		
 		nextPosition += new Vector3(
 				Random.Range(minGap.x, maxGap.x),
