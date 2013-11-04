@@ -11,7 +11,6 @@ public class Runner : MonoBehaviour {
 	
 	private bool touchingPlatform;
 	private Vector3 startPosition;
-
 	// Use this for initialization
 	void Start () {
 		GameEventManager.GameStart += GameStart;
@@ -24,6 +23,7 @@ public class Runner : MonoBehaviour {
 	
 	private void GameStart() {
 		distanceTraveled = 0f;
+		GUIManager.setDistance(distanceTraveled);
 		transform.localPosition = startPosition;
 		renderer.enabled = true;
 		rigidbody.isKinematic = false;
@@ -43,6 +43,7 @@ public class Runner : MonoBehaviour {
 			touchingPlatform = false;
 		}
 		distanceTraveled = transform.localPosition.x;
+		GUIManager.setDistance(distanceTraveled);
 		
 		if(transform.localPosition.y < gameOverY) {
 			GameEventManager.TriggerGameOver();

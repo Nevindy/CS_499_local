@@ -3,10 +3,13 @@ using System.Collections;
 
 public class GUIManager : MonoBehaviour {
 
-	public GUIText gameOverText, instructionsText, runnerText;
+	public GUIText gameOverText, instructionsText, runnerText, distanceText;
+	
+	private static GUIManager instance;
 
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
 		gameOverText.enabled = false;
@@ -30,5 +33,9 @@ public class GUIManager : MonoBehaviour {
 		gameOverText.enabled = true;
 		instructionsText.enabled = true;
 		enabled = true;
+	}
+	
+	public static void setDistance(float distance) {
+		instance.distanceText.text = distance.ToString("f0");
 	}
 }
