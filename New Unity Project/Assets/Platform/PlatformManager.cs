@@ -19,6 +19,7 @@ public class PlatformManager : MonoBehaviour {
 	private Queue<Transform> obstacleQueue;
 	private static PlatformManager instance;
 	private float obstacleX;
+	private float obstacleY;
 	
 	// Use this for initialization
 	void Start () {
@@ -110,6 +111,7 @@ public class PlatformManager : MonoBehaviour {
 				if(obj.position.x > initX){
 					isFound = true;
 					obstacleX = obj.position.x;
+					obstacleY = obj.position.y;
 				}
 			}
 		}
@@ -117,6 +119,10 @@ public class PlatformManager : MonoBehaviour {
 	
 	public static float getObstacleX() {
 		return instance.obstacleX;
+	}
+	
+	public static float getObstacleY() {
+		return instance.obstacleY;
 	}
 	
 	public static void removeObstacle(float position) {

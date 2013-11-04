@@ -11,6 +11,8 @@ public class Runner : MonoBehaviour {
 	
 	private bool touchingPlatform;
 	private Vector3 startPosition;
+	private int health;
+	
 	// Use this for initialization
 	void Start () {
 		GameEventManager.GameStart += GameStart;
@@ -28,6 +30,7 @@ public class Runner : MonoBehaviour {
 		renderer.enabled = true;
 		rigidbody.isKinematic = false;
 		enabled = true;
+		health = 100;
 	}
 	
 	private void GameOver() {

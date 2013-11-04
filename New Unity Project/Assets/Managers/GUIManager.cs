@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GUIManager : MonoBehaviour {
 
-	public GUIText gameOverText, instructionsText, runnerText, distanceText;
+	public GUIText gameOverText, instructionsText, runnerText, distanceText, healthText;
 	
 	private static GUIManager instance;
 
