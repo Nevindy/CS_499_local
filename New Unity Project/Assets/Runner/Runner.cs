@@ -25,12 +25,13 @@ public class Runner : MonoBehaviour {
 	
 	private void GameStart() {
 		distanceTraveled = 0f;
+		health = 100;
 		GUIManager.setDistance(distanceTraveled);
+		GUIManager.setHealth(health);
 		transform.localPosition = startPosition;
 		renderer.enabled = true;
 		rigidbody.isKinematic = false;
 		enabled = true;
-		health = 100;
 	}
 	
 	private void GameOver() {
@@ -47,6 +48,7 @@ public class Runner : MonoBehaviour {
 		}
 		distanceTraveled = transform.localPosition.x;
 		GUIManager.setDistance(distanceTraveled);
+		GUIManager.setHealth(health);
 		
 		if(transform.localPosition.y < gameOverY) {
 			GameEventManager.TriggerGameOver();
