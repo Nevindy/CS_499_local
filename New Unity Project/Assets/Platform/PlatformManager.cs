@@ -20,6 +20,7 @@ public class PlatformManager : MonoBehaviour {
 	private static PlatformManager instance;
 	private float obstacleX;
 	private float obstacleY;
+	private float obstacleHeight;
 	
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,7 @@ public class PlatformManager : MonoBehaviour {
 					new Vector3(0f, 0f, -100f), Quaternion.identity));
 			enabled = false;
 		}
+		obstacleHeight = 1;
 	}
 	
 	// Update is called once per frame
@@ -123,6 +125,10 @@ public class PlatformManager : MonoBehaviour {
 	
 	public static float getObstacleY() {
 		return instance.obstacleY;
+	}
+	
+	public static float getObstacleHeight() {
+		return instance.obstacleHeight;
 	}
 	
 	public static void removeObstacle(float position) {

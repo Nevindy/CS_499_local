@@ -50,13 +50,18 @@ public class Runner : MonoBehaviour {
 		GUIManager.setDistance(distanceTraveled);
 		GUIManager.setHealth(health);
 		
-		if(transform.localPosition.y < gameOverY) {
+		if(transform.localPosition.y < gameOverY || health <= 0) {
 			GameEventManager.TriggerGameOver();
 		}
 		float obstX = PlatformManager.getObstacleX();
-		Debug.Log(obstX);
+		float obstY = PlatformManager.getObstacleY();
+		float obstH = PlatformManager.getObstacleHeight();
 		if(distanceTraveled >= obstX-1) {
 			PlatformManager.removeObstacle(obstX);
+			Debug.Log(transform.localPosition.y);
+			if(transform.localPosition.y < obstY + obstH){
+				health -= 10;
+			}
 		}
 	}
 	
